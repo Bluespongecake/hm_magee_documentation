@@ -1,6 +1,7 @@
 /*
   AI-readable token structure based on:
   https://learn.thedesignsystem.guide/p/design-tokens-that-ai-can-actually
+
   Layers:
   1) Primitive tokens (raw values)
   2) Semantic tokens (intent)
@@ -197,6 +198,22 @@
   --component-section-eyebrow-text: var(--color-link-primary);
   --component-code-background: var(--color-layer-01);
   --component-code-text: var(--color-text-primary);
+  --component-code-block-background: var(--primitive-color-gray-100);
+  --component-code-block-border: var(--primitive-color-gray-80);
+  --component-code-block-text: var(--primitive-color-gray-20);
+  --component-code-block-language-bg: var(--primitive-color-gray-90);
+  --component-code-block-language-text: var(--primitive-color-gray-30);
+  --component-code-block-token-keyword: var(--primitive-color-purple-40);
+  --component-code-block-token-string: var(--primitive-color-green-40);
+  --component-code-block-token-number: var(--primitive-color-teal-30);
+  --component-code-block-token-comment: var(--primitive-color-gray-50);
+  --component-code-block-token-property: var(--primitive-color-blue-30);
+  --component-code-block-token-function: var(--primitive-color-teal-30);
+  --component-code-block-token-operator: var(--primitive-color-magenta-50);
+  --component-code-block-token-punctuation: var(--primitive-color-gray-30);
+  --component-code-block-token-tag: var(--primitive-color-blue-40);
+  --component-code-block-token-attr-name: var(--primitive-color-yellow-30);
+  --component-code-block-token-attr-value: var(--primitive-color-green-40);
 
   --component-tag-info-bg: var(--primitive-color-blue-20);
   --component-tag-info-text: var(--color-accent-strong);

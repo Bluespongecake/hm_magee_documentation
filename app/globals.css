@@ -431,6 +431,93 @@ code {
   border-radius: 2px;
 }
 
+.code-block-frame {
+  margin: var(--cds-spacing-06) 0;
+  border: 1px solid var(--component-code-block-border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.code-block__language {
+  background: var(--component-code-block-language-bg);
+  color: var(--component-code-block-language-text);
+  padding: var(--cds-spacing-02) var(--cds-spacing-04);
+  font-family: var(--font-family-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.code-block {
+  margin: 0;
+  overflow-x: auto;
+  background: var(--component-code-block-background);
+  padding: var(--cds-spacing-05);
+}
+
+.code-block code {
+  display: block;
+  padding: 0;
+  background: transparent;
+  color: var(--component-code-block-text);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.code-block__line {
+  display: block;
+  white-space: pre;
+}
+
+.code-block__token--keyword {
+  color: var(--component-code-block-token-keyword);
+}
+
+.code-block__token--string {
+  color: var(--component-code-block-token-string);
+}
+
+.code-block__token--number {
+  color: var(--component-code-block-token-number);
+}
+
+.code-block__token--comment {
+  color: var(--component-code-block-token-comment);
+}
+
+.code-block__token--property {
+  color: var(--component-code-block-token-property);
+}
+
+.code-block__token--function {
+  color: var(--component-code-block-token-function);
+}
+
+.code-block__token--operator {
+  color: var(--component-code-block-token-operator);
+}
+
+.code-block__token--punctuation {
+  color: var(--component-code-block-token-punctuation);
+}
+
+.code-block__token--tag {
+  color: var(--component-code-block-token-tag);
+}
+
+.code-block__token--attr-name {
+  color: var(--component-code-block-token-attr-name);
+}
+
+.code-block__token--attr-value {
+  color: var(--component-code-block-token-attr-value);
+}
+
+.code-block--javascript .code-block__token--keyword,
+.code-block--typescript .code-block__token--keyword {
+  font-weight: var(--font-weight-semibold);
+}
+
 .cds--tag {
   display: inline-flex;
   align-items: center;
@@ -489,6 +576,10 @@ code {
 
 .cds--callout--success {
   border-left-color: var(--component-callout-success-border);
+}
+
+.cds--callout--error {
+  border-left-color: var(--component-callout-error-border);
 }
 
 .cds--callout__title {
