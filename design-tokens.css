@@ -1,0 +1,324 @@
+/*
+  AI-readable token structure based on:
+  https://learn.thedesignsystem.guide/p/design-tokens-that-ai-can-actually
+  Layers:
+  1) Primitive tokens (raw values)
+  2) Semantic tokens (intent)
+  3) Component tokens (context)
+  4) Legacy aliases (backwards compatibility with --cds-*)
+*/
+
+:root {
+  /* ---------------------------------
+     1) Primitive tokens: color
+  --------------------------------- */
+  --primitive-color-gray-100: #161616;
+  --primitive-color-black: #000000;
+  --primitive-color-gray-90: #262626;
+  --primitive-color-gray-80: #393939;
+  --primitive-color-gray-70: #525252;
+  --primitive-color-gray-60: #6f6f6f;
+  --primitive-color-gray-50: #8d8d8d;
+  --primitive-color-gray-40: #a8a8a8;
+  --primitive-color-gray-30: #c6c6c6;
+  --primitive-color-gray-20: #e0e0e0;
+  --primitive-color-gray-10: #f4f4f4;
+  --primitive-color-white: #ffffff;
+
+  --primitive-color-blue-90: #01497a;
+  --primitive-color-blue-80: #0264a8;
+  --primitive-color-blue-70: #027dd3;
+  --primitive-color-blue-60: #0394f9;
+  --primitive-color-blue-50: #2da6fa;
+  --primitive-color-blue-40: #5ab8fa;
+  --primitive-color-blue-30: #8ecdfb;
+  --primitive-color-blue-20: #c5e5fe;
+  --primitive-color-blue-10: #e8f5ff;
+
+  --primitive-color-teal-70: #005d5d;
+  --primitive-color-teal-60: #007d79;
+  --primitive-color-teal-50: #009d9a;
+  --primitive-color-teal-40: #08bdba;
+  --primitive-color-teal-30: #3ddbd9;
+  --primitive-color-teal-20: #9ef0f0;
+
+  --primitive-color-green-60: #198038;
+  --primitive-color-green-50: #24a148;
+  --primitive-color-green-40: #42be65;
+  --primitive-color-green-10: #defbe6;
+
+  --primitive-color-purple-70: #6929c4;
+  --primitive-color-purple-60: #8a3ffc;
+  --primitive-color-purple-40: #be95ff;
+  --primitive-color-purple-10: #e8daff;
+
+  --primitive-color-magenta-60: #d02670;
+  --primitive-color-magenta-50: #ee5396;
+  --primitive-color-magenta-10: #fff0f7;
+
+  --primitive-color-red-60: #da1e28;
+  --primitive-color-yellow-30: #f1c21b;
+
+  /* ---------------------------------
+     1) Primitive tokens: spacing/layout
+  --------------------------------- */
+  --primitive-spacing-01: 2px;
+  --primitive-spacing-02: 4px;
+  --primitive-spacing-03: 8px;
+  --primitive-spacing-04: 12px;
+  --primitive-spacing-05: 16px;
+  --primitive-spacing-06: 24px;
+  --primitive-spacing-07: 32px;
+  --primitive-spacing-08: 40px;
+  --primitive-spacing-09: 48px;
+  --primitive-spacing-10: 64px;
+  --primitive-spacing-11: 80px;
+  --primitive-spacing-12: 96px;
+  --primitive-spacing-13: 160px;
+
+  --primitive-layout-grid-gutter: 32px;
+  --primitive-layout-grid-margin-sm: 24px;
+  --primitive-layout-grid-margin-md: 32px;
+  --primitive-layout-grid-margin-lg: 32px;
+  --primitive-layout-grid-margin-xlg: 32px;
+  --primitive-layout-grid-margin-max: 40px;
+  --primitive-layout-grid-max-width: 1584px;
+  --primitive-layout-header-height: 48px;
+  --primitive-layout-side-nav-width: 256px;
+
+  /* ---------------------------------
+     2) Semantic tokens: intent
+  --------------------------------- */
+  --color-background-default: var(--primitive-color-white);
+  --color-background-hover: var(--primitive-color-gray-10);
+  --color-background-inverse: var(--primitive-color-gray-100);
+  --color-layer-01: var(--primitive-color-gray-10);
+  --color-layer-02: var(--primitive-color-white);
+
+  --color-text-primary: var(--primitive-color-black);
+  --color-text-secondary: var(--primitive-color-black);
+  --color-text-helper: var(--primitive-color-black);
+  --color-text-on-color: var(--primitive-color-white);
+  --color-text-inverse-primary: var(--primitive-color-white);
+  --color-text-inverse-secondary: var(--primitive-color-gray-30);
+  --color-text-inverse-helper: var(--primitive-color-gray-50);
+
+  --color-link-primary: var(--primitive-color-blue-60);
+  --color-accent-subtle: var(--primitive-color-blue-40);
+  --color-accent-strong: var(--primitive-color-blue-80);
+
+  --color-border-subtle: var(--primitive-color-gray-20);
+  --color-border-strong: var(--primitive-color-gray-50);
+  --color-border-inverse: var(--primitive-color-gray-80);
+
+  --color-interactive-primary: var(--primitive-color-blue-60);
+
+  --color-feedback-error: var(--primitive-color-red-60);
+  --color-feedback-success: var(--primitive-color-green-60);
+  --color-feedback-warning: var(--primitive-color-yellow-30);
+  --color-feedback-info: var(--primitive-color-blue-70);
+  --color-feedback-positive-text: var(--primitive-color-black);
+  --color-feedback-negative-text: var(--primitive-color-black);
+
+  --font-family-sans: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-family-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --spacing-xxs: var(--primitive-spacing-01);
+  --spacing-xs: var(--primitive-spacing-02);
+  --spacing-sm: var(--primitive-spacing-03);
+  --spacing-md: var(--primitive-spacing-04);
+  --spacing-lg: var(--primitive-spacing-05);
+  --spacing-xl: var(--primitive-spacing-06);
+  --spacing-2xl: var(--primitive-spacing-07);
+  --spacing-3xl: var(--primitive-spacing-08);
+  --spacing-4xl: var(--primitive-spacing-09);
+  --spacing-5xl: var(--primitive-spacing-10);
+  --spacing-6xl: var(--primitive-spacing-11);
+  --spacing-7xl: var(--primitive-spacing-12);
+  --spacing-8xl: var(--primitive-spacing-13);
+
+  --layout-grid-gutter: var(--primitive-layout-grid-gutter);
+  --layout-grid-margin-sm: var(--primitive-layout-grid-margin-sm);
+  --layout-grid-margin-md: var(--primitive-layout-grid-margin-md);
+  --layout-grid-margin-lg: var(--primitive-layout-grid-margin-lg);
+  --layout-grid-margin-xlg: var(--primitive-layout-grid-margin-xlg);
+  --layout-grid-margin-max: var(--primitive-layout-grid-margin-max);
+  --layout-grid-max-width: var(--primitive-layout-grid-max-width);
+  --layout-header-height: var(--primitive-layout-header-height);
+  --layout-side-nav-width: var(--primitive-layout-side-nav-width);
+
+  /* ---------------------------------
+     3) Component tokens: context
+  --------------------------------- */
+  --component-header-height: var(--layout-header-height);
+  --component-header-background: var(--color-background-inverse);
+  --component-header-border-color: var(--color-border-inverse);
+  --component-header-divider: var(--primitive-color-gray-70);
+  --component-header-nav-text: var(--color-text-inverse-secondary);
+  --component-header-nav-text-active: var(--color-text-inverse-primary);
+  --component-header-nav-hover-bg: var(--primitive-color-gray-80);
+  --component-header-nav-active-indicator: var(--color-interactive-primary);
+
+  --component-side-nav-width: var(--layout-side-nav-width);
+  --component-side-nav-background: var(--color-background-default);
+  --component-side-nav-border: var(--color-border-subtle);
+  --component-side-nav-link-text: var(--color-text-secondary);
+  --component-side-nav-link-hover-bg: var(--color-background-hover);
+  --component-side-nav-link-active-bg: var(--color-layer-01);
+  --component-side-nav-link-active-indicator: var(--color-interactive-primary);
+
+  --component-button-primary-bg: var(--color-interactive-primary);
+  --component-button-primary-text: var(--color-text-on-color);
+  --component-button-destructive-bg: var(--color-feedback-error);
+
+  --component-input-border-default: var(--color-border-subtle);
+  --component-input-border-error: var(--color-feedback-error);
+  --component-input-padding-inline: var(--spacing-lg);
+  --component-input-padding-block: var(--spacing-md);
+
+  --component-callout-info-border: var(--primitive-color-blue-60);
+  --component-callout-success-border: var(--primitive-color-green-50);
+  --component-callout-warning-border: var(--primitive-color-yellow-30);
+  --component-callout-error-border: var(--primitive-color-red-60);
+  --component-callout-background: var(--color-layer-01);
+
+  --component-hero-background: var(--color-background-inverse);
+  --component-hero-text: var(--color-text-inverse-primary);
+  --component-hero-eyebrow-text: var(--color-accent-subtle);
+  --component-hero-subtitle-text: var(--color-text-inverse-secondary);
+  --component-hero-meta-label-text: var(--color-text-inverse-helper);
+  --component-hero-meta-value-text: var(--primitive-color-gray-20);
+
+  --component-section-eyebrow-text: var(--color-link-primary);
+  --component-code-background: var(--color-layer-01);
+  --component-code-text: var(--color-text-primary);
+
+  --component-tag-info-bg: var(--primitive-color-blue-20);
+  --component-tag-info-text: var(--color-accent-strong);
+  --component-tag-teal-bg: var(--primitive-color-teal-20);
+  --component-tag-teal-text: var(--primitive-color-teal-70);
+  --component-tag-success-bg: var(--primitive-color-green-10);
+  --component-tag-success-text: var(--color-feedback-success);
+  --component-tag-feature-bg: var(--primitive-color-purple-10);
+  --component-tag-feature-text: var(--primitive-color-purple-70);
+  --component-tag-advisory-bg: var(--primitive-color-magenta-10);
+  --component-tag-advisory-text: var(--primitive-color-magenta-60);
+  --component-tag-neutral-bg: var(--primitive-color-gray-30);
+  --component-tag-neutral-text: var(--color-text-primary);
+
+  --component-table-header-background: var(--color-background-inverse);
+  --component-table-header-text: var(--color-text-inverse-primary);
+  --component-table-row-even-background: var(--color-layer-01);
+
+  --component-structured-list-icon-text: var(--color-link-primary);
+
+  --component-recommendation-background: var(--color-background-inverse);
+  --component-recommendation-text: var(--color-text-inverse-primary);
+  --component-recommendation-accent: var(--color-link-primary);
+  --component-recommendation-label-text: var(--color-accent-subtle);
+  --component-recommendation-body-text: var(--color-text-inverse-secondary);
+
+  --component-footer-background: var(--color-background-inverse);
+  --component-footer-text: var(--primitive-color-gray-40);
+  --component-footer-heading: var(--color-text-inverse-secondary);
+  --component-footer-body: var(--color-text-inverse-helper);
+
+  --component-status-positive-text: var(--color-feedback-positive-text);
+  --component-status-negative-text: var(--color-feedback-negative-text);
+
+  /* ---------------------------------
+     4) Legacy aliases: existing --cds-* names
+     (keep current implementation compatible)
+  --------------------------------- */
+  --cds-gray-100: var(--primitive-color-gray-100);
+  --cds-gray-90: var(--primitive-color-gray-90);
+  --cds-gray-80: var(--primitive-color-gray-80);
+  --cds-gray-70: var(--primitive-color-gray-70);
+  --cds-gray-60: var(--primitive-color-gray-60);
+  --cds-gray-50: var(--primitive-color-gray-50);
+  --cds-gray-40: var(--primitive-color-gray-40);
+  --cds-gray-30: var(--primitive-color-gray-30);
+  --cds-gray-20: var(--primitive-color-gray-20);
+  --cds-gray-10: var(--primitive-color-gray-10);
+  --cds-white: var(--primitive-color-white);
+
+  --cds-blue-90: var(--primitive-color-blue-90);
+  --cds-blue-80: var(--primitive-color-blue-80);
+  --cds-blue-70: var(--primitive-color-blue-70);
+  --cds-blue-60: var(--primitive-color-blue-60);
+  --cds-blue-50: var(--primitive-color-blue-50);
+  --cds-blue-40: var(--primitive-color-blue-40);
+  --cds-blue-30: var(--primitive-color-blue-30);
+  --cds-blue-20: var(--primitive-color-blue-20);
+  --cds-blue-10: var(--primitive-color-blue-10);
+
+  --cds-teal-70: var(--primitive-color-teal-70);
+  --cds-teal-60: var(--primitive-color-teal-60);
+  --cds-teal-50: var(--primitive-color-teal-50);
+  --cds-teal-40: var(--primitive-color-teal-40);
+  --cds-teal-30: var(--primitive-color-teal-30);
+  --cds-teal-20: var(--primitive-color-teal-20);
+
+  --cds-green-60: var(--primitive-color-green-60);
+  --cds-green-50: var(--primitive-color-green-50);
+  --cds-green-40: var(--primitive-color-green-40);
+  --cds-green-10: var(--primitive-color-green-10);
+
+  --cds-purple-70: var(--primitive-color-purple-70);
+  --cds-purple-60: var(--primitive-color-purple-60);
+  --cds-purple-40: var(--primitive-color-purple-40);
+  --cds-purple-10: var(--primitive-color-purple-10);
+
+  --cds-magenta-60: var(--primitive-color-magenta-60);
+  --cds-magenta-50: var(--primitive-color-magenta-50);
+  --cds-magenta-10: var(--primitive-color-magenta-10);
+
+  --cds-red-60: var(--primitive-color-red-60);
+  --cds-yellow-30: var(--primitive-color-yellow-30);
+
+  --cds-background: var(--color-background-default);
+  --cds-background-hover: var(--color-background-hover);
+  --cds-layer-01: var(--color-layer-01);
+  --cds-layer-02: var(--color-layer-02);
+  --cds-text-primary: var(--color-text-primary);
+  --cds-text-secondary: var(--color-text-secondary);
+  --cds-text-helper: var(--color-text-helper);
+  --cds-text-on-color: var(--color-text-on-color);
+  --cds-link-primary: var(--color-link-primary);
+  --cds-border-subtle: var(--color-border-subtle);
+  --cds-border-strong: var(--color-border-strong);
+  --cds-interactive: var(--color-interactive-primary);
+  --cds-support-error: var(--color-feedback-error);
+  --cds-support-success: var(--color-feedback-success);
+  --cds-support-warning: var(--color-feedback-warning);
+  --cds-support-info: var(--color-feedback-info);
+
+  --cds-spacing-01: var(--primitive-spacing-01);
+  --cds-spacing-02: var(--primitive-spacing-02);
+  --cds-spacing-03: var(--primitive-spacing-03);
+  --cds-spacing-04: var(--primitive-spacing-04);
+  --cds-spacing-05: var(--primitive-spacing-05);
+  --cds-spacing-06: var(--primitive-spacing-06);
+  --cds-spacing-07: var(--primitive-spacing-07);
+  --cds-spacing-08: var(--primitive-spacing-08);
+  --cds-spacing-09: var(--primitive-spacing-09);
+  --cds-spacing-10: var(--primitive-spacing-10);
+  --cds-spacing-11: var(--primitive-spacing-11);
+  --cds-spacing-12: var(--primitive-spacing-12);
+  --cds-spacing-13: var(--primitive-spacing-13);
+
+  --cds-grid-gutter: var(--layout-grid-gutter);
+  --cds-grid-margin-sm: var(--layout-grid-margin-sm);
+  --cds-grid-margin-md: var(--layout-grid-margin-md);
+  --cds-grid-margin-lg: var(--layout-grid-margin-lg);
+  --cds-grid-margin-xlg: var(--layout-grid-margin-xlg);
+  --cds-grid-margin-max: var(--layout-grid-margin-max);
+  --cds-grid-max-width: var(--layout-grid-max-width);
+  --cds-header-height: var(--layout-header-height);
+  --cds-side-nav-width: var(--layout-side-nav-width);
+}

@@ -1,0 +1,48 @@
+{
+  "ignoreFiles": [
+    "design-tokens.css"
+  ],
+  "plugins": [
+    "stylelint-declaration-strict-value"
+  ],
+  "rules": {
+    "color-no-hex": true,
+    "function-disallowed-list": [
+      "rgb",
+      "rgba",
+      "hsl",
+      "hsla",
+      "hwb",
+      "lab",
+      "lch",
+      "oklab",
+      "oklch",
+      "color"
+    ],
+    "scale-unlimited/declaration-strict-value": [
+      [
+        "/color$/",
+        "background",
+        "background-color",
+        "border-color",
+        "border-top-color",
+        "border-right-color",
+        "border-bottom-color",
+        "border-left-color",
+        "fill",
+        "stroke"
+      ],
+      {
+        "disableFix": true,
+        "ignoreValues": [
+          "transparent",
+          "inherit",
+          "currentColor",
+          "none",
+          "initial",
+          "unset"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "meta": {
+    "name": "HotelMap Design Tokens",
+    "version": "1.0.0",
+    "updated": "2026-02-12",
+    "runtimeSourceOfTruth": "design-tokens.css",
+    "purpose": "Reference/source token export for documentation and planning; not consumed by runtime styles directly.",
+    "structure": "primitives-semantic-component",
+    "sourceVisual": "https://moonlit-longma-bdc78a.netlify.app",
+    "sourceStructure": "https://learn.thedesignsystem.guide/p/design-tokens-that-ai-can-actually"
+  },
+  "primitives": {
+    "color": {
+      "gray": {
+        "100": { "value": "#161616", "type": "color", "description": "Darkest neutral" },
+        "80": { "value": "#393939", "type": "color", "description": "Dark neutral for separators on dark UI" },
+        "70": { "value": "#525252", "type": "color", "description": "Secondary neutral text" },
+        "60": { "value": "#6f6f6f", "type": "color", "description": "Helper text neutral" },
+        "50": { "value": "#8d8d8d", "type": "color", "description": "Strong border neutral" },
+        "30": { "value": "#c6c6c6", "type": "color", "description": "Light text on dark backgrounds" },
+        "20": { "value": "#e0e0e0", "type": "color", "description": "Subtle border neutral" },
+        "10": { "value": "#f4f4f4", "type": "color", "description": "Light neutral surface" }
+      },
+      "white": { "value": "#ffffff", "type": "color", "description": "White" },
+      "blue": {
+        "70": { "value": "#027dd3", "type": "color", "description": "Info color" },
+        "60": { "value": "#0394f9", "type": "color", "description": "Primary interactive accent" },
+        "40": { "value": "#5ab8fa", "type": "color", "description": "Light blue accent for dark surfaces" }
+      },
+      "green": {
+        "60": { "value": "#198038", "type": "color", "description": "Error/success family dark tone" },
+        "50": { "value": "#24a148", "type": "color", "description": "Success accent" }
+      },
+      "red": {
+        "60": { "value": "#da1e28", "type": "color", "description": "Error accent" }
+      },
+      "yellow": {
+        "30": { "value": "#f1c21b", "type": "color", "description": "Warning accent" }
+      }
+    },
+    "spacing": {
+      "01": { "value": "2px", "type": "dimension", "description": "Tightest spacing" },
+      "03": { "value": "8px", "type": "dimension", "description": "Small spacing" },
+      "04": { "value": "12px", "type": "dimension", "description": "Medium-small spacing" },
+      "05": { "value": "16px", "type": "dimension", "description": "Base spacing" },
+      "07": { "value": "32px", "type": "dimension", "description": "Large spacing" },
+      "10": { "value": "64px", "type": "dimension", "description": "Section spacing" }
+    },
+    "layout": {
+      "headerHeight": { "value": "48px", "type": "dimension", "description": "Primary header height" },
+      "sideNavWidth": { "value": "256px", "type": "dimension", "description": "Desktop side-nav width" },
+      "gridMaxWidth": { "value": "1584px", "type": "dimension", "description": "Max layout width" }
+    }
+  },
+  "semantic": {
+    "color": {
+      "background": {
+        "default": {
+          "value": "{primitives.color.white.value}",
+          "type": "color",
+          "description": "Main app/page background",
+          "usage": ["page", "surface"]
+        },
+        "hover": {
+          "value": "{primitives.color.gray.10.value}",
+          "type": "color",
+          "description": "Hover background for rows/links/surfaces",
+          "usage": ["interactive", "table-row", "side-nav-link"]
+        }
+      },
+      "text": {
+        "primary": {
+          "value": "{primitives.color.gray.100.value}",
+          "type": "color",
+          "description": "Primary readable text",
+          "pairedWith": ["semantic.color.background.default"],
+          "usage": ["body", "headings"]
+        },
+        "secondary": {
+          "value": "{primitives.color.gray.70.value}",
+          "type": "color",
+          "description": "Secondary/supporting text",
+          "usage": ["metadata", "labels"]
+        },
+        "helper": {
+          "value": "{primitives.color.gray.60.value}",
+          "type": "color",
+          "description": "Helper/caption text",
+          "usage": ["helper", "muted"]
+        },
+        "onColor": {
+          "value": "{primitives.color.white.value}",
+          "type": "color",
+          "description": "Text on dark/accented backgrounds",
+          "pairedWith": ["component.header.background", "component.button.primary.background"]
+        }
+      },
+      "border": {
+        "subtle": {
+          "value": "{primitives.color.gray.20.value}",
+          "type": "color",
+          "description": "Default subtle divider",
+          "usage": ["table", "cards", "inputs"]
+        },
+        "strong": {
+          "value": "{primitives.color.gray.50.value}",
+          "type": "color",
+          "description": "Strong separator",
+          "usage": ["focus-surrounds", "emphasis-borders"]
+        }
+      },
+      "interactive": {
+        "primary": {
+          "value": "{primitives.color.blue.60.value}",
+          "type": "color",
+          "description": "Primary interactive action color",
+          "usage": ["links", "active-nav", "buttons"]
+        }
+      },
+      "feedback": {
+        "info": { "value": "{primitives.color.blue.70.value}", "type": "color", "description": "Informational feedback" },
+        "success": { "value": "{primitives.color.green.60.value}", "type": "color", "description": "Success feedback" },
+        "warning": { "value": "{primitives.color.yellow.30.value}", "type": "color", "description": "Warning feedback" },
+        "error": { "value": "{primitives.color.red.60.value}", "type": "color", "description": "Error feedback" }
+      }
+    },
+    "layout": {
+      "headerHeight": {
+        "value": "{primitives.layout.headerHeight.value}",
+        "type": "dimension",
+        "description": "Application header height"
+      },
+      "sideNavWidth": {
+        "value": "{primitives.layout.sideNavWidth.value}",
+        "type": "dimension",
+        "description": "Application side nav width"
+      }
+    }
+  },
+  "component": {
+    "header": {
+      "height": {
+        "value": "{semantic.layout.headerHeight.value}",
+        "type": "dimension",
+        "description": "Header fixed height"
+      },
+      "background": {
+        "value": "{primitives.color.gray.100.value}",
+        "type": "color",
+        "description": "Header background"
+      },
+      "navText": {
+        "value": "{primitives.color.gray.30.value}",
+        "type": "color",
+        "description": "Header nav default text"
+      },
+      "navActiveIndicator": {
+        "value": "{semantic.color.interactive.primary.value}",
+        "type": "color",
+        "description": "Header active link underline"
+      }
+    },
+    "sideNav": {
+      "width": {
+        "value": "{semantic.layout.sideNavWidth.value}",
+        "type": "dimension",
+        "description": "Side nav width"
+      },
+      "linkActiveBackground": {
+        "value": "{semantic.color.background.hover.value}",
+        "type": "color",
+        "description": "Active/hover side nav row background"
+      },
+      "linkActiveIndicator": {
+        "value": "{semantic.color.interactive.primary.value}",
+        "type": "color",
+        "description": "Active side nav indicator"
+      }
+    },
+    "button": {
+      "primary": {
+        "background": {
+          "value": "{semantic.color.interactive.primary.value}",
+          "type": "color",
+          "description": "Primary button background",
+          "pairedWith": ["semantic.color.text.onColor"]
+        },
+        "text": {
+          "value": "{semantic.color.text.onColor.value}",
+          "type": "color",
+          "description": "Primary button text"
+        }
+      }
+    },
+    "input": {
+      "paddingInline": {
+        "value": "{primitives.spacing.05.value}",
+        "type": "dimension",
+        "description": "Horizontal input padding"
+      },
+      "paddingBlock": {
+        "value": "{primitives.spacing.04.value}",
+        "type": "dimension",
+        "description": "Vertical input padding"
+      },
+      "borderDefault": {
+        "value": "{semantic.color.border.subtle.value}",
+        "type": "color",
+        "description": "Input default border"
+      },
+      "borderError": {
+        "value": "{semantic.color.feedback.error.value}",
+        "type": "color",
+        "description": "Input error border"
+      }
+    }
+  }
+}

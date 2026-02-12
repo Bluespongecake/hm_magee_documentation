@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy-First Hotel Capture Measurement Plan</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../../public/site-assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../../public/site-assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="../../public/site-assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="../../design-tokens.css">
+  <style>
+    @font-face {
+      font-family: "SiteEmbedded";
+      src: url("../../public/site-assets/embedded-font.woff2") format("woff2");
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #f8fafc;
+      --ink: #0f172a;
+      --muted: #475569;
+      --line: #dbe3ef;
+      --panel: #ffffff;
+      --brand: #0f766e;
+      --brand-soft: rgba(15, 118, 110, 0.12);
+      --warn: #9a6700;
+      --danger: #b42318;
+      --radius: 14px;
+      --header-h: 72px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: "SiteEmbedded", var(--vp-font-family-base), sans-serif;
+      background: radial-gradient(circle at top right, #dff7f4 0%, #f8fafc 30%, #f8fafc 100%);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: var(--header-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(248, 250, 252, 0.93);
+      backdrop-filter: blur(8px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .brand img { height: 28px; width: auto; }
+    .brand span { font-size: 14px; color: var(--muted); font-weight: 600; }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 28px 20px 64px;
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      gap: 24px;
+    }
+
+    .sidenav {
+      position: sticky;
+      top: calc(var(--header-h) + 18px);
+      align-self: start;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--vp-shadow-1);
+    }
+
+    .sidenav h2 {
+      margin: 0 0 10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .sidenav a {
+      display: block;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 6px 0;
+    }
+
+    .sidenav a:hover { color: var(--brand); }
+
+    main { min-width: 0; }
+
+    .hero {
+      background: linear-gradient(140deg, #052e2b 0%, #0f766e 60%, #13897f 100%);
+      color: #f4fffd;
+      border-radius: calc(var(--radius) + 2px);
+      padding: 28px;
+      margin-bottom: 22px;
+      box-shadow: var(--vp-shadow-2);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-size: clamp(28px, 3.5vw, 44px);
+      line-height: 1.12;
+      font-weight: 720;
+    }
+
+    .hero p {
+      margin: 0 0 14px;
+      max-width: 900px;
+      color: #d9f5f2;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      border: 1px solid rgba(255,255,255,0.26);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #e6faf7;
+    }
+
+    .section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin-bottom: 16px;
+      box-shadow: var(--vp-shadow-1);
+    }
+
+    .section h2 {
+      margin: 0 0 10px;
+      font-size: 24px;
+      line-height: 1.2;
+    }
+
+    .section h3 {
+      margin: 18px 0 8px;
+      font-size: 17px;
+    }
+
+    .callout {
+      border-left: 4px solid var(--brand);
+      background: var(--brand-soft);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin: 12px 0;
+    }
+
+    .list {
+      margin: 10px 0 0;
+      padding-left: 18px;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .mini {
+      border: 1px solid var(--line);
+      background: #fbfdff;
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .timeline {
+      margin-top: 8px;
+      border-left: 2px dashed #b4d9d4;
+      padding-left: 16px;
+    }
+
+    .step {
+      position: relative;
+      margin: 0 0 16px;
+      padding: 10px 12px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fcfffe;
+    }
+
+    .step::before {
+      content: "";
+      position: absolute;
+      left: -23px;
+      top: 14px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--brand);
+      box-shadow: 0 0 0 5px #e1f4f1;
+    }
+
+    .kpi {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .kpi .mini code {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: #0b3b38;
+      background: #ecfbf9;
+      padding: 6px 8px;
+      border-radius: 8px;
+    }
+
+    .tablewrap {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 660px;
+      font-size: 13px;
+    }
+
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+      padding: 10px;
+    }
+
+    th { background: #f5faf9; }
+
+    .status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid #b9e5df;
+      background: #eefaf7;
+      color: #0e635c;
+      white-space: nowrap;
+    }
+
+    .warn { color: var(--warn); }
+    .danger { color: var(--danger); }
+
+    .footer {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer img { width: 14px; height: 14px; }
+
+    @media (max-width: 1024px) {
+      .container { grid-template-columns: 1fr; }
+      .sidenav { position: static; }
+    }
+
+    @media (max-width: 720px) {
+      .hero, .section { padding: 16px; }
+      .grid2, .kpi { grid-template-columns: 1fr; }
+      .topbar { padding: 0 14px; }
+      .brand span { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="../../public/site-assets/hotelmap-logo.svg" alt="HotelMap logo">
+      <strong>Privacy-First Project Map</strong>
+    </div>
+    <span class="pill">Document date: 12 February 2026</span>
+  </header>
+
+  <div class="container">
+    <aside class="sidenav" aria-label="Section navigation">
+      <h2>Contents</h2>
+      <a href="#overview">Overview</a>
+      <a href="#step0">Step 0 - Definition</a>
+      <a href="#step1">Step 1 - Addressable Signal</a>
+      <a href="#step2">Step 2 - Attribution</a>
+      <a href="#step3">Step 3 - Website Measurement</a>
+      <a href="#step4">Step 4 - Data Separation</a>
+      <a href="#step5">Step 5 - Governance</a>
+      <a href="#sequence">Implementation Sequence</a>
+    </aside>
+
+    <main>
+      <section class="hero" id="overview">
+        <p class="eyebrow">Hotel Capture Measurement (Privacy-First)</p>
+        <h1>Project Plan Map: Registration -> Attribution -> Analytics -> Governance</h1>
+        <p>
+          Goal: quantify addressable market (attendees with 3+ hour travel or explicit accommodation need) and hotel capture rate, while minimizing personal data and reducing tracking dependencies.
+        </p>
+        <div class="meta">
+          <span class="pill">Primary KPI: Capture Rate</span>
+          <span class="pill">Recommended model: Derived-only analytics</span>
+          <span class="pill">Retention: 30-90 days row-level</span>
+          <span class="pill">Long-term: aggregates only</span>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Guiding Principles</h2>
+        <div class="grid2">
+          <div class="mini"><strong>Data minimization</strong><br>Collect the smallest set of inputs required to derive "3+ hours".</div>
+          <div class="mini"><strong>Separation of concerns</strong><br>Keep ticketing/operations records separate from analytics signals.</div>
+          <div class="mini"><strong>Early aggregation</strong><br>Keep row-level analytics briefly, retain aggregated reports longer.</div>
+          <div class="mini"><strong>Avoid tracking where possible</strong><br>Prefer self-declared/coarse derived signals over device identifiers.</div>
+        </div>
+      </section>
+
+      <section class="section" id="step0">
+        <h2>Step 0: Define "Non-Local" Precisely</h2>
+        <div class="callout">
+          Recommended fields: <code>travel_time_band</code> (0-1h, 1-3h, 3-6h, 6h+, unknown) and derived <code>is_addressable_for_hotel</code>.
+        </div>
+        <div class="timeline">
+          <article class="step"><strong>Decision 1</strong>: Travel mode baseline (car default, public transport, or best available).</article>
+          <article class="step"><strong>Decision 2</strong>: Origin definition (home/work, nearest town, or user-stated origin).</article>
+          <article class="step"><strong>Decision 3</strong>: Use banded output instead of hard binary to avoid false precision.</article>
+        </div>
+      </section>
+
+      <section class="section" id="step1">
+        <h2>Step 1: Determine Addressable Market at Registration</h2>
+        <h3>1A) Data Collection Options</h3>
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr><th>Option</th><th>What You Collect</th><th>Trade-off</th><th>Priority</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>A. Ask Directly</strong></td>
+                <td>"Need accommodation?" and "Journey 3+ hours?" (Yes/No/Not sure)</td>
+                <td>Most privacy-preserving; self-report bias.</td>
+                <td><span class="status">Primary</span></td>
+              </tr>
+              <tr>
+                <td><strong>B. Coarse Origin + Derive</strong></td>
+                <td>ZIP/postcode or city+country, then convert to band, discard raw origin in analytics.</td>
+                <td>More consistent metric; careful retention and handling needed.</td>
+                <td><span class="status">Secondary</span></td>
+              </tr>
+              <tr>
+                <td><strong>C. IP Geolocation Fallback</strong></td>
+                <td>Only when fields skipped; quickly truncate/discard IP.</td>
+                <td class="danger">Higher GDPR/ePrivacy sensitivity.</td>
+                <td><span class="status">Fallback</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>1B) Derive "3+ Hours"</h3>
+        <div class="grid2">
+          <div class="mini"><strong>Distance proxy</strong><br>Good default when using bands; low cost but less accurate near threshold.</div>
+          <div class="mini"><strong>Travel-time API</strong><br>Better boundary accuracy; adds processor/vendor and transfer controls.</div>
+          <div class="mini"><strong>Self-declared only</strong><br>Least data processing; weaker consistency across events.</div>
+          <div class="mini"><strong>Storage rule</strong><br>Keep only derived values in analytics, not raw location strings.</div>
+        </div>
+
+        <h3>1C-1D) Retention and KPI Outputs</h3>
+        <ul class="list">
+          <li>Analytics fields: travel band, addressable flag, booking outcome, event_id, ticket_type, timestamp.</li>
+          <li>Row-level retention: 30-90 days; then aggregate-only retention.</li>
+          <li>Small-count suppression: hide/merge groups below threshold (e.g., &lt;10).</li>
+        </ul>
+        <div class="kpi">
+          <div class="mini"><strong>Addressable Market Count</strong><code>count(is_addressable_for_hotel = true)</code></div>
+          <div class="mini"><strong>Hotel Capture Count</strong><code>count(addressable AND booked_via_flow)</code></div>
+          <div class="mini"><strong>Capture Rate</strong><code>hotel_capture_count / addressable_market_count</code></div>
+        </div>
+      </section>
+
+      <section class="section" id="step2">
+        <h2>Step 2: Connect Registration to Hotel Outcome (Attribution)</h2>
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr><th>Option</th><th>Strength</th><th>Watch-outs</th><th>Priority</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Direct add-on at checkout</strong></td>
+                <td>Strong attribution with least tracking.</td>
+                <td>Operational integration and inventory readiness.</td>
+                <td><span class="status">Highest</span></td>
+              </tr>
+              <tr>
+                <td><strong>Unique booking link per registration</strong></td>
+                <td>Low tracking, post-checkout compatible.</td>
+                <td>Prevent link-sharing abuse and PII leakage in URL.</td>
+                <td><span class="status">High</span></td>
+              </tr>
+              <tr>
+                <td><strong>Post-registration email journey</strong></td>
+                <td>May improve conversion uplift.</td>
+                <td class="warn">Marketing lawful basis and unsubscribe controls.</td>
+                <td><span class="status">As needed</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout">
+          Store only: internal registration key, booking outcome, booking timestamp, event_id. Keep provider refs in operations only (or encrypted).
+        </div>
+      </section>
+
+      <section class="section" id="step3">
+        <h2>Step 3: Website Measurement (View -> Register -> Book)</h2>
+        <div class="grid2">
+          <div class="mini"><strong>A. First-party event-level analytics</strong><br><span class="status">Recommended</span><br>Server-side event model and cohort-level funnels; avoids cross-site tracking dependency.</div>
+          <div class="mini"><strong>B. Logged-in continuity</strong><br>Can support behavior continuity; requires stronger data governance and access controls.</div>
+          <div class="mini"><strong>C. Third-party pixels</strong><br><span class="danger">Fast deployment but highest consent/transfer complexity.</span></div>
+          <div class="mini"><strong>Consent posture</strong><br>Design core KPI so it does not depend on non-essential cookies or cross-session identifiers.</div>
+        </div>
+      </section>
+
+      <section class="section" id="step4">
+        <h2>Step 4: Data Model and Separation</h2>
+        <div class="callout">
+          Key control: do not export operations PII into analytics. Perform reconciliation in a controlled environment; export only aggregates.
+        </div>
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr><th>Layer</th><th>Key Fields</th><th>Retention</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>operations.registrations</strong></td>
+                <td>registration_id, event_id, purchaser contact, payment, operational notes</td>
+                <td>Business/legal need</td>
+              </tr>
+              <tr>
+                <td><strong>analytics.registration_signals</strong></td>
+                <td>anon_user_key, event_id, travel_time_band, addressable flag, ticket_type, timestamp</td>
+                <td>30-90 days row-level</td>
+              </tr>
+              <tr>
+                <td><strong>analytics.hotel_outcomes</strong></td>
+                <td>anon_user_key or registration_id, event_id, booked_flag, booking_timestamp</td>
+                <td>30-90 days row-level</td>
+              </tr>
+              <tr>
+                <td><strong>reporting.event_kpis</strong></td>
+                <td>event_id, addressable count, capture count, capture rate, band/ticket breakdowns</td>
+                <td>2-3 years aggregated</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section" id="step5">
+        <h2>Step 5: Governance Deliverables</h2>
+        <div class="timeline">
+          <article class="step"><strong>5A) LIA</strong>: justify purpose, necessity, and balancing safeguards for this measurement model.</article>
+          <article class="step"><strong>5B) DPIA triggers</strong>: systematic monitoring, extensive profiling, or risky dataset combinations.</article>
+          <article class="step"><strong>5C) Vendor controls</strong>: DPAs, subprocessors, transfer locations, IP logging defaults.</article>
+          <article class="step"><strong>5D) Retention jobs</strong>: enforce 30-90 day row-level deletion and longer aggregate retention.</article>
+        </div>
+      </section>
+
+      <section class="section" id="sequence">
+        <h2>Suggested Implementation Sequence</h2>
+        <ol class="list">
+          <li>Add registration questions (Option A) and derive addressable fields.</li>
+          <li>Implement attribution via direct add-on or unique booking link.</li>
+          <li>Build event KPI dashboard (addressable, capture, band/ticket breakdowns).</li>
+          <li>Add first-party, server-side website funnel events with consent gating where required.</li>
+          <li>Only then introduce personalization/ordering logic after governance review (likely DPIA).</li>
+        </ol>
+        <div class="footer">
+          <img src="../../public/site-assets/icon-check.svg" alt="Check icon">
+          Mapped from privacy_first_project_steps.pdf into a web implementation blueprint.
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

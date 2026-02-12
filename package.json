@@ -1,0 +1,25 @@
+{
+  "name": "hm-magee-documentation",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint && npm run lint:styles",
+    "lint:styles": "stylelint \"app/**/*.css\""
+  },
+  "dependencies": {
+    "next": "14.2.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "typescript": "5.5.4",
+    "@types/node": "20.14.12",
+    "@types/react": "18.3.3",
+    "@types/react-dom": "18.3.0",
+    "stylelint": "^16.16.0",
+    "stylelint-declaration-strict-value": "^1.10.11"
+  }
+}
