@@ -594,6 +594,10 @@ code {
   margin-bottom: 0;
 }
 
+.metric-definitions strong {
+  font-weight: var(--font-weight-bold);
+}
+
 .cds--data-table-wrapper {
   margin: var(--cds-spacing-06) 0;
   overflow-x: auto;
