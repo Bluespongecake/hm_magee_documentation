@@ -23,7 +23,7 @@ import {
 
 const navItems: DocumentNavItem[] = [
   { id: "overview", label: "Project Overview" },
-  { id: "step0", label: "Step 0: Define “Non-Local” Precisely" },
+  { id: "step0", label: "Step 0: Travel Time as Primary Metric" },
   { id: "step1", label: "Step 1: Determine Addressable Market at Registration" },
   {
     id: "step1-data-collection-options",
@@ -68,21 +68,25 @@ const footerColumns: FooterColumnData[] = [
   },
 ];
 
+// Change 1 & 2: travel-time-first framing replaces "non-local boolean" framing
 const definitionListItems: StructuredListItem[] = [
   {
     icon: "1",
-    title: "Travel mode baseline",
-    description: "Car (default), public transport, or best available.",
+    title: "Travel time is the primary derived metric",
+    description:
+      "Compute travel_time_minutes from attendee origin to the full event address as the canonical output. Store this figure, not a boolean.",
   },
   {
     icon: "2",
-    title: "Origin definition",
-    description: "Home/work, nearest major town, or attendee stated origin.",
+    title: ""Non-local / addressable" is a secondary interpretation",
+    description:
+      "Apply a configurable threshold to travel_time_minutes to derive is_addressable_for_hotel. Thresholds differ by region (e.g. US ≥ 5h, UK/EU ≥ 3h); record which was applied at derivation time.",
   },
   {
     icon: "3",
     title: "Banded over binary",
-    description: "Reduces false precision and re-identification risk.",
+    description:
+      "Expose travel_time_band (0–1h, 1–3h, 3–5h, 5h+, unknown) for reporting. Reduces false precision and re-identification risk while preserving segmentation flexibility.",
   },
 ];
 
@@ -151,7 +155,7 @@ export default function HomePage() {
               <MetricTile
                 label="Signal Model"
                 value="Derived-Only"
-                detail="Store band + flag, avoid raw location in analytics"
+                detail="Store travel time + band + flag, avoid raw location in analytics"
                 size="small"
               />
               <MetricTile
@@ -169,16 +173,40 @@ export default function HomePage() {
             </TileGrid>
           </DocumentSection>
 
-          <DocumentSection id="step0" title="Step 0: Define “Non-Local” Precisely">
+          {/* Change 1: Title and intro paragraph reframed around travel time first */}
+          <DocumentSection id="step0" title="Step 0: Travel Time as Primary Metric">
             <p>
-              Make the 3+ hour rule defensible and consistent across events by fixing travel mode,
-              origin definition, and output shape.
+              The primary derived metric is <code>travel_time_minutes</code> from attendee origin
+              to the full event address. "Non-local" and "addressable for hotel" are secondary,
+              configurable interpretations of that travel time — a threshold applied per region
+              (e.g. US ≥ 5h, UK/EU ≥ 3h). Storing only a boolean makes cross-event and
+              cross-country comparisons hard and masks the impact of threshold changes over time.
             </p>
+
+            {/* Change 2: New "why store travel time" callout */}
+            <Callout title="Why we store travel time (not just a flag)" variant="info">
+              <>
+                <p>
+                  <strong>Stable comparisons.</strong> Travel time bands allow consistent
+                  cross-event and cross-country analysis; a single boolean flag cannot.
+                </p>
+                <p>
+                  <strong>Future-proof thresholds.</strong> If the US threshold changes from 5h to
+                  4h, historical reporting stays valid because the underlying travel time is stored.
+                </p>
+                <p>
+                  <strong>Richer segmentation.</strong> Bands (0–1h, 1–3h, 3–5h, 5h+) unlock
+                  demand-distance curves and venue-comparison reports that a binary flag cannot
+                  support.
+                </p>
+              </>
+            </Callout>
 
             <Callout title="Recommended Output Fields" variant="success">
               <>
-                <code>travel_time_band</code> (0-1h, 1-3h, 3-6h, 6h+, unknown) and
-                <code> is_addressable_for_hotel</code>.
+                <code>travel_time_minutes</code> (primary), <code>travel_time_band</code>{" "}
+                (0–1h, 1–3h, 3–5h, 5h+, unknown), and{" "}
+                <code>is_addressable_for_hotel</code> (derived from travel time + threshold config).
               </>
             </Callout>
 
@@ -214,20 +242,67 @@ export default function HomePage() {
               ]}
             />
 
+            {/* Change 3: "Derive early, store minimal" instruction + analytics schema */}
             <DocumentSectionSubtitle id="step1-derivation-kpi-outputs">B) Derivation</DocumentSectionSubtitle>
             <p>
-              Analytics should store only derived fields: travel band, addressable flag, outcome,
-              event_id, ticket_type, timestamp.
+              Derive early, store minimal. Compute <code>travel_time_minutes</code> as soon as
+              origin data is available — at registration submission, booking checkout, or server
+              ingestion. Immediately derive <code>travel_time_band</code> and{" "}
+              <code>is_addressable_for_hotel</code> from the result. Do not persist raw origin
+              inputs (IP address, full postal address) in analytics tables once these travel-time
+              fields are derived. Record the threshold and calculation version so the boolean is
+              always reproducible from stored travel time and threshold config.
             </p>
 
+            {/* Change 4: Analytics schema table */}
+            <DataTable
+              headers={["Field", "Type", "Notes"]}
+              rows={[
+                [
+                  "travel_time_minutes",
+                  "integer (nullable)",
+                  "Primary derived metric. Null if origin unavailable.",
+                ],
+                ["travel_time_band", "enum", "0–1h | 1–3h | 3–5h | 5h+ | unknown"],
+                [
+                  "is_addressable_for_hotel",
+                  "boolean",
+                  "Derived: travel_time_minutes ≥ threshold_minutes_applied.",
+                ],
+                [
+                  "threshold_minutes_applied",
+                  "integer",
+                  "Threshold used at derivation time (e.g. 300 for US 5h, 180 for UK/EU 3h).",
+                ],
+                [
+                  "travel_calc_version",
+                  "string",
+                  "Version of routing or heuristic method used (e.g. v1.2). Required for reproducibility.",
+                ],
+                ["origin_source", "enum", "registration_form | ip_fallback | stated | unknown"],
+                ["origin_confidence", "enum", "high | medium | low"],
+              ]}
+            />
+
+            {/* Change 6: KPI outputs include travel-time distribution */}
             <DocumentSectionSubtitle id="step1-kpi-outputs">C) KPI Outputs</DocumentSectionSubtitle>
             <p>
-              KPI outputs: <code>addressable_market_count</code>, <code>hotel_capture_count</code>,
-              and <code>capture_rate</code>.
+              Primary KPI outputs: <code>addressable_market_count</code>,{" "}
+              <code>hotel_capture_count</code>, and <code>capture_rate</code>. Additionally report
+              the distribution of attendees by <code>travel_time_band</code> to surface demand
+              patterns and avoid relying on a single brittle "% non-local" figure. Addressable
+              market counts should be calculated by applying the configured threshold to stored
+              travel time, not from a stored boolean alone.
             </p>
 
+            {/* Change 6: Breakdowns include travel_time_band distribution */}
             <DocumentSectionSubtitle id="step1-kpi-breakdowns">D) Breakdowns</DocumentSectionSubtitle>
-            <p>Report those KPIs with band, ticket, and timing breakdowns.</p>
+            <p>
+              Report KPIs broken down by <code>travel_time_band</code> (stacked bar or table),
+              ticket type, and event timing. Include <code>origin_source</code> and{" "}
+              <code>origin_confidence</code> as secondary dimensions to show data-quality context
+              alongside the distribution.
+            </p>
           </DocumentSection>
 
           <DocumentSection id="step2" title="Step 2: Connect Registration to Hotel Outcome">
@@ -270,6 +345,7 @@ export default function HomePage() {
             </RecommendationCard>
           </DocumentSection>
 
+          {/* Change 4: Updated analytics.registration_signals fields in data model */}
           <DocumentSection id="step4" title="Step 4: Data Model and Separation">
             <p>
               Keep clear purpose boundaries: operations PII stays in ticketing systems; analytics
@@ -286,7 +362,7 @@ export default function HomePage() {
                 ],
                 [
                   "analytics.registration_signals",
-                  "anon_user_key, event_id, travel band, addressable flag, timestamp",
+                  "anon_user_key, event_id, travel_time_minutes, travel_time_band, is_addressable_for_hotel, threshold_minutes_applied, travel_calc_version, origin_source, origin_confidence, ticket_type, timestamp",
                   "30-90 days row-level",
                 ],
                 [
@@ -296,7 +372,7 @@ export default function HomePage() {
                 ],
                 [
                   "reporting.event_kpis",
-                  "event-level counts, capture rate, band/ticket breakdowns",
+                  "event-level counts, capture rate, travel_time_band distribution, band/ticket breakdowns",
                   "2-3 years aggregated",
                 ],
               ]}
@@ -377,6 +453,7 @@ const bookingToken = await new SignJWT({
               <code> book</code> events. Core KPI should count only users that are registered and
               addressable.
             </p>
+            {/* Change 4 & 5: Event contract updated with travel time fields and calc version */}
             <CodeBlock
               language="json"
               code={`{
@@ -384,14 +461,20 @@ const bookingToken = await new SignJWT({
   "event_id": "ev_123",
   "anon_id": "uuid",
   "registration_status": "registered",
+  "travel_time_minutes": 210,
+  "travel_time_band": "3-5h",
   "is_addressable_for_hotel": true,
-  "travel_time_band": "3-6h",
+  "threshold_minutes_applied": 180,
+  "travel_calc_version": "v1.2",
+  "origin_source": "registration_form",
+  "origin_confidence": "high",
   "ticket_type": "delegate",
   "idempotency_key": "uuid",
   "ts": "2026-02-12T10:00:00.000Z"
 }`}
             />
 
+            {/* Change 5: Canonical travel-time calculation method and travel_calc_version */}
             <DocumentSectionSubtitle>6D) Recommended Libraries and Services</DocumentSectionSubtitle>
             <p>
               Runtime/data: <code>zod</code> for payload validation, <code>jose</code> for signed
@@ -403,9 +486,13 @@ const bookingToken = await new SignJWT({
               ingestion.
             </p>
             <p>
-              Distance derivation: server-side travel-time lookup via a routing API (for example
-              Mapbox or Google Routes), then store only <code>travel_time_band</code> and
-              <code> is_addressable_for_hotel</code> in analytics.
+              Travel-time derivation: compute <code>travel_time_minutes</code> server-side at
+              ingestion using a routing API (e.g. Mapbox Matrix API or Google Routes) as the
+              canonical method, with a straight-line heuristic fallback (haversine + regional speed
+              factor) when the API is unavailable. Record the method used in{" "}
+              <code>travel_calc_version</code> so future routing changes do not invalidate
+              historical comparisons. Store only the derived fields in analytics — never the raw
+              coordinates or postal codes used for the lookup.
             </p>
 
             <Callout title="Core Feasibility Constraint" variant="error">
@@ -414,13 +501,22 @@ const bookingToken = await new SignJWT({
             </Callout>
           </DocumentSection>
 
+          {/* Change 7: Travel-time derivation pipeline added as an explicit early milestone */}
           <DocumentSection id="sequence" title="Suggested Implementation Sequence">
-            <p>1. Add registration questions + derived fields.</p>
-            <p>2. Implement attribution via add-on or unique links.</p>
-            <p>3. Build KPI dashboard for addressable market and capture.</p>
-            <p>4. Add first-party server-side funnel events.</p>
-            <p>5. Implement signed registration-to-booking token handoff.</p>
-            <p>6. Add personalization only after governance review.</p>
+            <p>1. Add registration questions + derived fields (direct-ask and coarse origin).</p>
+            <p>
+              2. <strong>Implement travel-time derivation pipeline.</strong> At ingestion (registration
+              and booking events), call the routing API, derive <code>travel_time_minutes</code>,{" "}
+              <code>travel_time_band</code>, and <code>is_addressable_for_hotel</code>, and persist
+              these fields with <code>threshold_minutes_applied</code> and{" "}
+              <code>travel_calc_version</code>. All downstream reporting builds on these stored
+              values.
+            </p>
+            <p>3. Implement attribution via add-on or unique links.</p>
+            <p>4. Build KPI dashboard: addressable market, capture rate, and travel-time band distribution.</p>
+            <p>5. Add first-party server-side funnel events.</p>
+            <p>6. Implement signed registration-to-booking token handoff.</p>
+            <p>7. Add personalization only after governance review.</p>
           </DocumentSection>
         </DocumentMain>
       </DocumentLayout>
