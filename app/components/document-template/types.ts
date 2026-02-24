@@ -18,6 +18,8 @@ export type DocumentNavItem = {
   label: string;
   parentId?: string;
   variant?: DocumentNavItemVariant;
+  /** When set, use this href instead of #id (for route links) */
+  href?: string;
 };
 
 export type FooterColumnData = {

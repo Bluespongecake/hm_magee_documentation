@@ -17,7 +17,7 @@ export function Callout({
   return (
     <div className={cx("cds--callout", `cds--callout--${variant}`)}>
       <div className="cds--callout__title">{title}</div>
-      <p>{children}</p>
+      <div className="cds--callout__body">{children}</div>
     </div>
   );
 }

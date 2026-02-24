@@ -158,7 +158,7 @@ export function DocumentSideNav({
           <a
             className={className}
             data-parent={item.parentId}
-            href={`#${item.id}`}
+            href={item.href ?? `#${item.id}`}
             key={`${item.id}-${item.label}`}
           >
             {item.label}

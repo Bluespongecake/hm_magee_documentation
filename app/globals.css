@@ -588,9 +588,16 @@ code {
   margin-bottom: var(--cds-spacing-03);
 }
 
-.cds--callout p {
+.cds--callout__body {
   font-size: 0.875rem;
   line-height: 1.43;
+}
+
+.cds--callout__body p {
+  margin-bottom: var(--cds-spacing-03);
+}
+
+.cds--callout__body p:last-child {
   margin-bottom: 0;
 }
 
@@ -805,4 +812,30 @@ code {
 
 .text-negative {
   color: var(--component-status-negative-text);
+}
+
+/* Document list (home + project pages) */
+.doc-list {
+  list-style: none;
+  margin: var(--cds-spacing-06) 0 0;
+}
+
+.doc-list li {
+  margin-bottom: var(--cds-spacing-02);
+}
+
+.doc-list__link {
+  display: block;
+  padding: var(--cds-spacing-04) var(--cds-spacing-05);
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-link-primary);
+  text-decoration: none;
+  transition: background 120ms, color 120ms;
+}
+
+.doc-list__link:hover {
+  background: var(--color-background-hover);
+  color: var(--color-interactive-primary);
 }
