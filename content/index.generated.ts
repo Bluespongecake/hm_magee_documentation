@@ -3,9 +3,12 @@
  * Do not edit. Run `npm run generate-content` to regenerate.
  */
 
-export const projects: string[] = ["magee"];
+export const projects: string[] = ["ek-directory-regulariser","magee"];
 
 export const documents: Record<string, string[]> = {
+  "ek-directory-regulariser": [
+    "system-plan"
+  ],
   "magee": [
     "measurement-plan",
     "overview"
@@ -13,6 +16,7 @@ export const documents: Record<string, string[]> = {
 };
 
 const loaders: Record<string, () => Promise<{ default: React.ComponentType }>> = {
+  "ek-directory-regulariser/system-plan": () => import("./ek-directory-regulariser/system-plan"),
   "magee/measurement-plan": () => import("./magee/measurement-plan"),
   "magee/overview": () => import("./magee/overview"),
 };
